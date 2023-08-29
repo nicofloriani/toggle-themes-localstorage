@@ -2,10 +2,24 @@ import "./styles.css";
 import { useState, useEffect } from "react";
 
 const App = () => {
+  const [theme, setTheme] = useState(
+    JSON.parse(window.localStorage.getItem("theme")) || "light"
+  );
+
+  useEffect(() => {
+    window.localStorage.setItem("theme", JSON.stringify(theme));
+  }, [theme]);
+
   return (
-    <div className={`App`}>
+    <div className={`App ${theme}`}>
       <div className="wrapper">
-        <button>Toggle theme</button>
+        <button
+          onClick={(e) =>
+            theme === "dark" ? setTheme("light") : setTheme("dark")
+          }
+        >
+          Toggle theme
+        </button>
         <p>
           <span className="accent">Fiona the flamingo loved to travel.</span>{" "}
           She flew over mountains, deserts, and oceans, making new friends along
